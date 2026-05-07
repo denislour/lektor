@@ -1,39 +1,38 @@
-name: Deploy to Cloudflare Pages
+name: Deploy to Cloudflare Workers
 
 on:
-  push:
-    branches: [master]
+    push:
+        branches: [master]
 
-  # Cho phép chạy tay từ GitHub Actions tab
-  workflow_dispatch:
+    workflow_dispatch:
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      deployments: write
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    deploy:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            deployments: write
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
 
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: wasm32-unknown-unknown
+            - name: Setup Rust
+              uses: dtolnay/rust-toolchain@stable
+              with:
+                  targets: wasm32-unknown-unknown
 
-      - name: Cache Cargo
-        uses: Swatinem/rust-cache@v2
+            - name: Cache Cargo
+              uses: Swatinem/rust-cache@v2
 
-      - name: Install Trunk
-        run: cargo install trunk
+            - name: Install Trunk
+              run: cargo install trunk
 
-      - name: Build
-        run: trunk build --release
+            - name: Build
+              run: trunk build --release
 
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=lektor
+            - name: Deploy to Cloudflare Workers
+              uses: cloudflare/wrangler-action@v3
+              with:
+                  apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+                  accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+                  command: deploy
