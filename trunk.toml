@@ -7,4 +7,4 @@ public_url = "/"
 extra_args = ["--target", "wasm32-unknown-unknown"]
 
 [tools]
-tailwindcss = "v4"
+tailwindcss = "4.2.4"
