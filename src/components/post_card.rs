@@ -7,7 +7,7 @@ use leptos::prelude::*;
 
 #[component]
 pub fn PostCard(post: Post) -> impl IntoView {
-    let AppCtx { app, .. } = use_context().expect("AppCtx not provided");
+    let AppCtx { app, .. } = expect_context();
     let lang = app.lang();
     let href = format!("/post?id={}", post.id);
     let prog_lang = post

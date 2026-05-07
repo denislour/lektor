@@ -7,7 +7,7 @@ use leptos::prelude::*;
 
 #[component]
 pub fn FeaturedPost() -> impl IntoView {
-    let AppCtx { app, posts, .. } = use_context().expect("AppCtx not provided");
+    let AppCtx { app, posts, .. } = expect_context();
     let lang = app.lang();
 
     move || {

@@ -34,7 +34,7 @@ pub fn Pagination(
     on_page_change: impl Fn(usize) + Copy + Send + 'static,
     total: impl Fn() -> usize + 'static + Copy + Send,
 ) -> impl IntoView {
-    let AppCtx { app, .. } = use_context().expect("AppCtx not provided");
+    let AppCtx { app, .. } = expect_context();
     let lang = app.lang();
 
     move || {

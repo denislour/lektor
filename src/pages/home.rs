@@ -9,7 +9,7 @@ const PER_PAGE: usize = 6;
 
 #[component]
 pub fn HomePage() -> impl IntoView {
-    let AppCtx { app, search, posts } = use_context().expect("AppCtx not provided");
+    let AppCtx { app, search, posts } = expect_context();
     let lang = app.lang();
 
     Effect::new(move |_| {

@@ -4,7 +4,7 @@ use leptos::prelude::*;
 
 #[component]
 pub fn Header(#[prop(optional)] show_search: bool) -> impl IntoView {
-    let AppCtx { app, search, posts } = use_context().expect("AppCtx not provided");
+    let AppCtx { app, search, posts } = expect_context();
     let lang = app.lang();
     view! {
         <header
