@@ -1,3 +1,6 @@
+use wasm_bindgen::prelude::*;
+use wasm_bindgen::JsCast;
+
 pub fn tag_to_lang(tag: &str) -> &'static str {
     match tag {
         "rust" | "async" | "tokio" | "systems" | "lifetime" | "cli" => "rust",
@@ -76,6 +79,66 @@ impl Doc {
             .and_then(|d| d.document_element());
         if let Some(el) = el {
             let _ = el.set_attribute(name, value);
+        }
+    }
+}
+
+pub struct Hljs;
+
+impl Hljs {
+    pub fn init() {
+        if let Some(window) = web_sys::window() {
+            let cb = Closure::wrap(Box::new(move || {
+                if let Ok(hljs) = js_sys::Reflect::get(&js_sys::global(), &"hljs".into()) {
+                    if !hljs.is_undefined() {
+                        if let Ok(f) = hljs.dyn_into::<js_sys::Function>() {
+                            let _ = f.call0(&js_sys::global());
+                        }
+                    }
+                }
+            }) as Box<dyn FnMut()>);
+
+            if let Ok(handle) = window
+                .set_interval_with_callback_and_timeout_and_arguments_0(
+                    cb.as_ref().unchecked_ref(),
+                    400,
+                )
+            {
+                cb.forget();
+
+                let w = window.clone();
+                let clear_cb = Closure::wrap(Box::new(move || {
+                    let _ = w.clear_interval_with_handle(handle);
+                }) as Box<dyn FnMut()>);
+                let _ = window.set_timeout_with_callback_and_timeout_and_arguments_0(
+                    clear_cb.as_ref().unchecked_ref(),
+                    2000,
+                );
+                clear_cb.forget();
+            }
+        }
+    }
+}
+
+pub struct Scroll;
+
+impl Scroll {
+    pub fn watch(mut callback: Box<dyn FnMut(f64)>) -> Box<dyn FnOnce() + Send + Sync> {
+        if let Some(window) = web_sys::window() {
+            let w = window.clone();
+            let cb = Closure::wrap(Box::new(move || {
+                let scroll_y = w.scroll_y().unwrap_or(0.0);
+                callback(scroll_y);
+            }) as Box<dyn FnMut()>);
+            let _ = window.set_onscroll(Some(cb.as_ref().unchecked_ref::<js_sys::Function>()));
+            cb.forget();
+
+            let w2 = window.clone();
+            Box::new(move || {
+                let _ = w2.set_onscroll(None);
+            })
+        } else {
+            Box::new(|| {})
         }
     }
 }

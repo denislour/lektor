@@ -3,18 +3,18 @@ use crate::data::load_posts;
 use crate::i18n::Lang;
 use crate::pages::{AboutPage, HomePage, PostPage};
 use crate::stores::{AppCtx, AppStore, PostsStore, SearchStore};
-use crate::utils::{Doc, Storage};
+use crate::utils::{Doc, Hljs, Scroll, Storage};
 use leptos::prelude::*;
 use leptos_router::components::{Route, Router, Routes};
 use leptos_router::params::Params;
 use leptos_router::path;
-use wasm_bindgen::JsCast;
 
 #[derive(Debug, Clone, PartialEq, Eq, Params)]
 pub struct PostParams {
     pub id: Option<String>,
 }
 
+#[allow(non_snake_case)]
 #[component]
 pub fn App() -> impl IntoView {
     let initial_theme = Storage::get_item("theme", "light");
@@ -40,18 +40,13 @@ pub fn App() -> impl IntoView {
     });
 
     Effect::new(move |_| {
-        let window = web_sys::window().unwrap();
-        let scroll_cb = wasm_bindgen::prelude::Closure::wrap(Box::new(move || {
-            let scroll_y = web_sys::window().unwrap().scroll_y().unwrap_or(0.0);
+        let cleanup = Scroll::watch(Box::new(move |scroll_y| {
             ctx.app.set_back_to_top(scroll_y > 300.0);
-        }) as Box<dyn FnMut()>);
-        let _ = window.set_onscroll(Some(scroll_cb.as_ref().unchecked_ref::<js_sys::Function>()));
-        scroll_cb.forget();
+        }));
+        on_cleanup(cleanup);
     });
 
-    let _ = js_sys::eval(
-        "var hc=0;var ht=setInterval(function(){if(window.hljs){hljs.highlightAll();hc++;if(hc>4)clearInterval(ht)}},400)",
-    );
+    Hljs::init();
 
     view! {
         <Router>
