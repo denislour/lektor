@@ -1,5 +1,5 @@
-use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
+use wasm_bindgen::prelude::*;
 
 pub fn tag_to_lang(tag: &str) -> &'static str {
     match tag {
@@ -98,12 +98,10 @@ impl Hljs {
                 }
             }) as Box<dyn FnMut()>);
 
-            if let Ok(handle) = window
-                .set_interval_with_callback_and_timeout_and_arguments_0(
-                    cb.as_ref().unchecked_ref(),
-                    400,
-                )
-            {
+            if let Ok(handle) = window.set_interval_with_callback_and_timeout_and_arguments_0(
+                cb.as_ref().unchecked_ref(),
+                400,
+            ) {
                 cb.forget();
 
                 let w = window.clone();
