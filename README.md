@@ -3,6 +3,8 @@
 A **backend & systems blog** built with [Leptos](https://leptos.dev/) (Rust WASM),
 featuring a collection of posts on Rust, Python, databases, DevOps, and system design.
 
+![Lektor screenshot](images/image.png)
+
 ## Tech Stack
 
 | Layer | Technology |
