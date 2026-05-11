@@ -72,8 +72,8 @@ impl AppStore {
 
     pub fn toggle_lang(&self) {
         let (k, v) = match self.state.lang().get() == Lang::En {
-            true => (Lang::En, "en"),
-            false => (Lang::Vi, "vi"),
+            true => (Lang::Vi, "vi"),
+            false => (Lang::En, "en"),
         };
         self.state.lang().set(k);
         Storage::set_item("lang", v);
