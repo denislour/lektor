@@ -22,7 +22,6 @@ pub fn HomePage() -> impl IntoView {
     Effect::new(move |_| {
         let p = app.page().get();
         Session::set_item("lektor_page", &p.to_string());
-        Scroll::smooth_scroll_to("posts-section", 50);
     });
 
     Effect::new(move |_| {
@@ -91,7 +90,7 @@ pub fn HomePage() -> impl IntoView {
                     </div>
                 </div>
             </section>
-            <Pagination page=app.page() on_page_change=move |n| app.set_page(n) total=total_pages />
+            <Pagination page=app.page() on_page_change=move |n| { app.set_page(n); Scroll::smooth_scroll_to("posts-section", 50); } total=total_pages />
         </div>
     }
 }
