@@ -19,7 +19,10 @@ impl PostsStore {
         }
     }
 
-    pub fn items(&self, search_query: impl Get<Value = String> + Copy + Send + Sync + 'static) -> Signal<Vec<Post>> {
+    pub fn items(
+        &self,
+        search_query: impl Get<Value = String> + Copy + Send + Sync + 'static,
+    ) -> Signal<Vec<Post>> {
         let s = self.state;
         Signal::derive(move || {
             let q = search_query.get().trim().to_lowercase();
