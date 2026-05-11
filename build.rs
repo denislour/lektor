@@ -8,7 +8,7 @@ fn main() {
 
     let posts_dir = Path::new(match env::var("CF_PAGES") {
         Ok(_) => "posts",
-        _ => "posts-local",
+        _ => "posts",
     });
 
     let mut entries: Vec<String> = Vec::new();
