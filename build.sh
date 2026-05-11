@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+# If dist/ has content (pre-built locally), skip the heavy Rust build
+if [ -f dist/index.html ] && ls dist/*.wasm &>/dev/null 2>&1; then
+  echo "📦 Pre-built dist/ found — skipping Rust build"
+  exit 0
+fi
+
 export CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
 export PATH="$CARGO_HOME/bin:$PATH"
 BIN="$CARGO_HOME/bin"
@@ -21,14 +27,14 @@ if [ ! -f "$BIN/tailwindcss" ]; then
   chmod +x tailwindcss-linux-x64 && mv tailwindcss-linux-x64 "$BIN/tailwindcss"
 fi
 
-# Rust toolchain (check binary directly, avoids PATH issues)
+# Rust toolchain
 if [ ! -f "$BIN/rustc" ]; then
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 fi
 . "$CARGO_HOME/env"
 rustup target add wasm32-unknown-unknown
 
-# Trunk (pre-compiled binary, not compiled from source)
+# Trunk (pre-compiled binary)
 if [ ! -f "$BIN/trunk" ]; then
   curl -sLO "https://github.com/trunk-rs/trunk/releases/download/v0.21.14/trunk-x86_64-unknown-linux-gnu.tar.gz"
   tar xzf trunk-x86_64-unknown-linux-gnu.tar.gz && mv trunk "$BIN/" && rm trunk-x86_64-unknown-linux-gnu.tar.gz
@@ -37,7 +43,7 @@ fi
 export LEKTOR_ENV=production
 trunk build --release
 
-# === Save cache for next build ===
+# === Save cache ===
 mkdir -p /opt/buildhome/cache/cargo /opt/buildhome/cache/target
 cp -r "$CARGO_HOME/registry" /opt/buildhome/cache/cargo/ 2>/dev/null || true
 cp -r target/release/. /opt/buildhome/cache/target/ 2>/dev/null || true
