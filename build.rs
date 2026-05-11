@@ -6,7 +6,11 @@ fn main() {
     let out_dir = env::var("OUT_DIR").unwrap();
     let dest = Path::new(&out_dir).join("posts_list.rs");
 
-    let posts_dir = Path::new("posts");
+    let posts_dir = Path::new(match env::var("CF_PAGES") {
+        Ok(_) => "posts",
+        _ => "posts-local",
+    });
+
     let mut entries: Vec<String> = Vec::new();
 
     if let Ok(dir) = fs::read_dir(posts_dir) {
