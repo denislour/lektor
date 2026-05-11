@@ -31,18 +31,12 @@ pub fn App() -> impl IntoView {
     provide_context(ctx);
 
     Effect::new(move |_| {
-        let q = ctx.search.query().get();
-        ctx.posts.filter(&q);
-    });
-
-    Effect::new(move |_| {
         Doc::set_attr("data-theme", &ctx.app.theme().get());
     });
 
     Effect::new(move |_| {
-        let cleanup = Scroll::watch(Box::new(move |scroll_y| {
-            ctx.app.set_back_to_top(scroll_y > 300.0);
-        }));
+        let app = ctx.app;
+        let cleanup = Scroll::watch(Box::new(move |y| app.set_back_to_top(y > 300.0)));
         on_cleanup(cleanup);
     });
 
