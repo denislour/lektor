@@ -13,23 +13,21 @@ pub fn HomePage() -> impl IntoView {
     let lang = app.lang();
 
     Effect::new(move |_| {
-        let p = app.page().get();
-        Session::set_item("lektor_page", &p.to_string());
-    });
-
-    Effect::new(move |_| {
-        let _ = app.page().get();
-        if let Some(y) = Session::get_item("lektor_scroll").and_then(|y| y.parse::<f64>().ok()) {
-            Session::remove_item("lektor_scroll");
-            let _ = js_sys::eval(&format!(
-                "setTimeout(function(){{window.scrollTo(0,{})}},100)",
-                y
-            ));
+        let q = search.query().get();
+        if !q.trim().is_empty() {
+            app.set_page(1);
         }
     });
 
     Effect::new(move |_| {
-        let _ = app.page().get();
+        let p = app.page().get();
+        Session::set_item("lektor_page", &p.to_string());
+        let _ = js_sys::eval(
+            r#"setTimeout(()=>document.getElementById('posts-section')?.scrollIntoView({behavior:'smooth'}),50)"#,
+        );
+    });
+
+    Effect::new(move |_| {
         let _ = search.is_searching().get();
         Hljs::highlight();
     });
