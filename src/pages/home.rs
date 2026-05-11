@@ -2,7 +2,7 @@ use crate::components::{FeaturedPost, HeroSection, Pagination, PostCard};
 use crate::data::Post;
 use crate::i18n::*;
 use crate::stores::AppCtx;
-use crate::utils::{Hljs, Session};
+use crate::utils::{Hljs, Scroll, Session};
 use leptos::prelude::*;
 
 const PER_PAGE: usize = 6;
@@ -22,9 +22,7 @@ pub fn HomePage() -> impl IntoView {
     Effect::new(move |_| {
         let p = app.page().get();
         Session::set_item("lektor_page", &p.to_string());
-        let _ = js_sys::eval(
-            r#"setTimeout(()=>document.getElementById('posts-section')?.scrollIntoView({behavior:'smooth'}),50)"#,
-        );
+        Scroll::smooth_scroll_to("posts-section", 50);
     });
 
     Effect::new(move |_| {
