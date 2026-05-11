@@ -4,13 +4,27 @@ use wasm_bindgen::prelude::*;
 pub struct Hljs;
 
 impl Hljs {
+    pub fn highlight() {
+        if let Ok(h) = js_sys::Reflect::get(&js_sys::global(), &"hljs".into()) {
+            if !h.is_undefined() {
+                if let Ok(f) = js_sys::Reflect::get(&h, &"highlightAll".into()) {
+                    if let Some(func) = f.dyn_ref::<js_sys::Function>() {
+                        let _ = func.call0(&h);
+                    }
+                }
+            }
+        }
+    }
+
     pub fn init() {
         if let Some(window) = web_sys::window() {
             let cb = Closure::wrap(Box::new(move || {
                 if let Ok(hljs) = js_sys::Reflect::get(&js_sys::global(), &"hljs".into()) {
                     if !hljs.is_undefined() {
-                        if let Ok(f) = hljs.dyn_into::<js_sys::Function>() {
-                            let _ = f.call0(&js_sys::global());
+                        if let Ok(f) = js_sys::Reflect::get(&hljs, &"highlightAll".into()) {
+                            if let Some(func) = f.dyn_ref::<js_sys::Function>() {
+                                let _ = func.call0(&hljs);
+                            }
                         }
                     }
                 }
