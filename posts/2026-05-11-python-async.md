@@ -3,7 +3,7 @@ title: "Python async: Từ coroutine đến asyncio"
 date: "2026-05-11"
 tags: ["python", "async"]
 readTime: 5
-excerpt: "async/await trong Python không phải phép thuật. Nó chỉ là mấy cái hàm biết 'đi toilet' giữa chừng — pause rồi quay lại làm tiếp."
+excerpt: "async/await trong Python không phải là magic. Nó chỉ là mấy cái hàm biết 'đi WC' giữa chừng — pause rồi quay lại làm tiếp."
 thumbnailCode: |-
   import asyncio
 
@@ -20,13 +20,11 @@ thumbnailCode: |-
     print(results)
 ---
 
-# Python async: Từ coroutine đến asyncio
-
 Anh em viết Python, chắc cũng nghe đồn *"Python chậm vì GIL"*. Đúng đấy, nhưng async không phải để làm Python nhanh hơn — nó để làm Python đỡ chờ đợi.
 
 ## Coroutine Là Gì? Giải Thích Cho Anh Em Dễ Hiểu
 
-Hàm thường chạy từ đầu đến cuối. Coroutine thì biết dừng giữa chừng — như đi toilet giữa lúc làm việc vậy:
+Hàm thường chạy từ đầu đến cuối. Coroutine thì biết dừng giữa chừng — như đi WC giữa lúc làm việc vậy:
 
 ```python
 import asyncio
@@ -60,9 +58,9 @@ asyncio.run(main())
 # Bữa sáng: ☕ + 🍞
 ```
 
-Thấy chưa? Cả hai chạy gần như cùng lúc. Coffee mất 3s, bánh mì mất 2s, nhưng tổng thời gian chỉ ~3s — chứ không phải 5s. Vì trong lúc chờ nước sôi, anh em nướng bánh mì luôn.
+Từ output trên có lẽ anh em đã nhận ra là cả hai chạy gần như cùng lúc. Coffee mất 3s, bánh mì mất 2s, nhưng tổng thời gian chỉ ~3s — chứ không phải 5s. Vì trong lúc chờ nước sôi, anh em nướng bánh mì luôn.
 
-## Event Loop — Thằng Dàn Xếp
+## Event Loop — Kẻ Giật Dây
 
 Event loop là thằng quản lý: nó nhìn xem coroutine nào đang `await` cái gì, nếu đang chờ I/O thì nó chuyển sang coroutine khác ngay. Không ai phải ngồi không mà chờ.
 
@@ -124,7 +122,7 @@ async def main():
 
 **Nên dùng async khi:** gọi API, query database, đọc file, hay bất cứ tác vụ I/O nào mà anh em phải chờ.
 
-**Đừng dùng async khi:** tính toán CPU-bound như xử lý ảnh, crypto, hay vòng lặp toán học nặng. GIL vẫn là GIL — async không thoát được đâu.
+**Đừng dùng async khi:** tính toán CPU-bound như xử lý ảnh, crypto, hay vòng lặp toán học nặng. GIL vẫn là GIL — async giải quyết được đâu.
 
 ```python
 import asyncio
@@ -147,4 +145,4 @@ with Pool() as pool:
 
 Async là skill sinh tồn trong Python hiện đại. Xài cho I/O-bound tasks (API, database, file), đừng đụng vào CPU-bound. Còn cái GIL thì... sống chung với nó thôi.
 
-*"Async Python không làm code chạy nhanh hơn — nó làm code chờ đợi ít hơn."* ⏱️
+> *"Async Python không làm code chạy nhanh hơn — nó làm code chờ đợi ít hơn."* ⏱️
