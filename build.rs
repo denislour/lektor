@@ -6,9 +6,9 @@ fn main() {
     let out_dir = env::var("OUT_DIR").unwrap();
     let dest = Path::new(&out_dir).join("posts_list.rs");
 
-    let posts_dir = Path::new(match env::var("CF_PAGES") {
-        Ok(_) => "posts",
-        _ => "posts",
+    let posts_dir = Path::new(match env::var("LEKTOR_ENV") {
+        Ok(v) if v == "production" => "posts",
+        _ => "posts-local",
     });
 
     let mut entries: Vec<String> = Vec::new();
