@@ -29,6 +29,8 @@ pub fn HomePage() -> impl IntoView {
 
     Effect::new(move |_| {
         let _ = search.is_searching().get();
+        let _ = app.page().get();
+        let _ = search.query().get();
         Hljs::highlight();
     });
 
