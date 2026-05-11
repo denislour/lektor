@@ -1,4 +1,4 @@
-use crate::utils::Session;
+use super::Session;
 
 pub fn tag_to_lang(tag: &str) -> &'static str {
     match tag {

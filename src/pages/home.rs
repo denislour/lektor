@@ -2,7 +2,7 @@ use crate::components::{FeaturedPost, HeroSection, Pagination, PostCard};
 use crate::data::Post;
 use crate::i18n::*;
 use crate::stores::AppCtx;
-use crate::utils::Session;
+use crate::utils::{Hljs, Session};
 use leptos::prelude::*;
 
 const PER_PAGE: usize = 6;
@@ -31,13 +31,11 @@ pub fn HomePage() -> impl IntoView {
     Effect::new(move |_| {
         let _ = app.page().get();
         let _ = search.is_searching().get();
-        let _ = js_sys::eval(
-            "requestAnimationFrame(function(){setTimeout(function(){if(window.hljs)window.hljs.highlightAll()},100)})",
-        );
+        Hljs::highlight();
     });
 
     let grid_items = move || {
-        let items = posts.items().get();
+        let items = posts.items(search.query()).get();
         match !search.is_searching().get() {
             true => items.into_iter().skip(1).collect(),
             false => items,

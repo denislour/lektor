@@ -2,31 +2,29 @@ use crate::app::PostParams;
 
 use crate::i18n::*;
 use crate::stores::AppCtx;
+use crate::utils::Hljs;
 
 use leptos::prelude::*;
 use leptos_router::hooks::use_query;
-use wasm_bindgen::JsCast;
 
 #[component]
 pub fn PostPage() -> impl IntoView {
-    let AppCtx { app, posts, .. } = expect_context();
+    let AppCtx { app, search, posts } = expect_context();
     let lang = app.lang();
     let query = use_query::<PostParams>();
 
     let post = move || {
         let id = query.get().ok().and_then(|p| p.id).unwrap_or_default();
-        posts.items().get().into_iter().find(|p| p.id == id)
+        posts
+            .items(search.query())
+            .get()
+            .into_iter()
+            .find(|p| p.id == id)
     };
 
     Effect::new(move |_| {
         let _ = post();
-        if let Some(w) = web_sys::window() {
-            let cb = wasm_bindgen::prelude::Closure::once(move || {
-                let _ = js_sys::eval("if(window.hljs)hljs.highlightAll()");
-            });
-            let _ = w.set_timeout_with_callback(cb.as_ref().unchecked_ref::<js_sys::Function>());
-            cb.forget();
-        }
+        Hljs::highlight();
     });
 
     view! {
