@@ -1,2 +1,2 @@
 #!/bin/bash
-trunk build --release && git add dist/
+trunk build --release

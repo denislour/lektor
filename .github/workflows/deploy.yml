@@ -1,0 +1,33 @@
+name: Deploy
+
+on:
+    push:
+        branches: [master]
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        timeout-minutes: 30
+        steps:
+            - uses: actions/checkout@v6
+
+            - name: Install Rust
+              uses: dtolnay/rust-toolchain@stable
+              with:
+                  targets: wasm32-unknown-unknown
+
+            - name: Install Trunk
+              run: |
+                  curl -sLO "https://github.com/trunk-rs/trunk/releases/download/v0.21.14/trunk-x86_64-unknown-linux-gnu.tar.gz"
+                  tar xzf trunk-x86_64-unknown-linux-gnu.tar.gz
+                  sudo mv trunk /usr/local/bin/
+                  rm trunk-x86_64-unknown-linux-gnu.tar.gz
+
+            - name: Build
+              run: LEKTOR_ENV=production trunk build --release
+
+            - name: Deploy to Cloudflare Workers
+              uses: cloudflare/wrangler-action@v3
+              with:
+                  apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+                  accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
