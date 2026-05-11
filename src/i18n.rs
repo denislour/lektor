@@ -68,10 +68,10 @@ pub fn tr(lang: Lang, key: I18nKey) -> &'static str {
         (Lang::En, I18nKey::HeroArrowString) => "-> String",
         (Lang::Vi, I18nKey::HeroArrowString) => "-> String",
         (Lang::En, I18nKey::HeroDescription) => {
-            "A place to write about backend, Rust, Python, and system architecture."
+            "Just a corner to write about backend, Rust, Python, and system architecture — Coffee not included."
         }
         (Lang::Vi, I18nKey::HeroDescription) => {
-            "Chỗ để mình viết linh tinh về backend, Rust, Python với kiến trúc hệ thống."
+            "Một góc nhỏ để viết linh tinh về backend, Rust, Python, với kiến trúc hệ thống."
         }
         (Lang::En, I18nKey::HeroPostsLatest) => "~/posts/latest",
         (Lang::Vi, I18nKey::HeroPostsLatest) => "~/posts/latest",
