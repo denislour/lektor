@@ -87,7 +87,7 @@ pub fn Header(#[prop(optional)] show_search: bool) -> impl IntoView {
                         <span class="font-mono text-xs text-[var(--text-tertiary)] shrink-0">{move || {
                             let q = search.query().get();
                             if q.trim().is_empty() { return String::new(); }
-                            let cnt = posts.items().get().len();
+                            let cnt = posts.items(search.query()).get().len();
                             format!("{} {}", cnt, tr(lang.get(), I18nKey::SearchResultsLabel))
                         }}</span>
                     </div>
