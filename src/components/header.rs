@@ -28,7 +28,7 @@ pub fn Header(#[prop(optional)] show_search: bool) -> impl IntoView {
                     aria-label={move || tr(lang.get(), I18nKey::BackToHomepage)}>
                     <span class="text-[var(--text-tertiary)] font-normal">"["</span>
                     <span class="">
-                        "print"<span class="text-[var(--brand-500)]">"(\"Lektor\")"</span>
+                        "print!"<span class="text-[var(--brand-500)]">"(\"Lektor\")"</span>
                     </span>
                     <span class="text-[var(--text-tertiary)] font-normal">"]"</span>
                 </a>

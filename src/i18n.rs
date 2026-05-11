@@ -159,7 +159,7 @@ pub fn tr(lang: Lang, key: I18nKey) -> &'static str {
         }
         (Lang::En, I18nKey::AboutSignoff) => "- Lektor, writing at 2am",
         (Lang::Vi, I18nKey::AboutSignoff) => "- Lektor, viết lúc 2h sáng",
-        (Lang::En, I18nKey::FooterText) => "print(\"Lektor\")",
-        (Lang::Vi, I18nKey::FooterText) => "print(\"Lektor\")",
+        (Lang::En, I18nKey::FooterText) => "print!(\"Lektor\")",
+        (Lang::Vi, I18nKey::FooterText) => "print!(\"Lektor\")",
     }
 }
