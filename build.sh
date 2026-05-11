@@ -1,49 +1,38 @@
 #!/bin/bash
 set -e
 
-# If dist/ has content (pre-built locally), skip the heavy Rust build
+# Pre-built locally → skip build entirely
 if [ -f dist/index.html ] && ls dist/*.wasm &>/dev/null 2>&1; then
-  echo "📦 Pre-built dist/ found — skipping Rust build"
+  echo "📦 dist/ pre-built — skipping"
   exit 0
 fi
 
+# === Fallback: build on Cloudflare ===
 export CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
 export PATH="$CARGO_HOME/bin:$PATH"
 BIN="$CARGO_HOME/bin"
-
-# === Restore cache ===
-if [ -d /opt/buildhome/cache/cargo ]; then
-  cp -r /opt/buildhome/cache/cargo/. "$CARGO_HOME/" 2>/dev/null || true
-fi
-if [ -d /opt/buildhome/cache/target ]; then
-  cp -r /opt/buildhome/cache/target/. ./target/ 2>/dev/null || true
-fi
-
 mkdir -p "$BIN"
 
-# Tailwind binary
-if [ ! -f "$BIN/tailwindcss" ]; then
-  curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/download/v4.2.4/tailwindcss-linux-x64
-  chmod +x tailwindcss-linux-x64 && mv tailwindcss-linux-x64 "$BIN/tailwindcss"
-fi
+# Restore caches
+[ -d /opt/buildhome/cache/cargo ]  && cp -r /opt/buildhome/cache/cargo/.  "$CARGO_HOME/"  2>/dev/null || true
+[ -d /opt/buildhome/cache/target ] && cp -r /opt/buildhome/cache/target/. ./target/        2>/dev/null || true
 
-# Rust toolchain
-if [ ! -f "$BIN/rustc" ]; then
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-fi
+# Tailwind
+[ ! -f "$BIN/tailwindcss" ] && curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/download/v4.2.4/tailwindcss-linux-x64 \
+  && chmod +x tailwindcss-linux-x64 && mv tailwindcss-linux-x64 "$BIN/tailwindcss"
+
+# Rust
+[ ! -f "$BIN/rustc" ] && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 . "$CARGO_HOME/env"
 rustup target add wasm32-unknown-unknown
 
-# Trunk (pre-compiled binary)
-if [ ! -f "$BIN/trunk" ]; then
-  curl -sLO "https://github.com/trunk-rs/trunk/releases/download/v0.21.14/trunk-x86_64-unknown-linux-gnu.tar.gz"
-  tar xzf trunk-x86_64-unknown-linux-gnu.tar.gz && mv trunk "$BIN/" && rm trunk-x86_64-unknown-linux-gnu.tar.gz
-fi
+# Trunk
+[ ! -f "$BIN/trunk" ] && curl -sLO "https://github.com/trunk-rs/trunk/releases/download/v0.21.14/trunk-x86_64-unknown-linux-gnu.tar.gz" \
+  && tar xzf trunk-x86_64-unknown-linux-gnu.tar.gz && mv trunk "$BIN/" && rm trunk-x86_64-unknown-linux-gnu.tar.gz
 
-export LEKTOR_ENV=production
-trunk build --release
+LEKTOR_ENV=production trunk build --release
 
-# === Save cache ===
-mkdir -p /opt/buildhome/cache/cargo /opt/buildhome/cache/target
-cp -r "$CARGO_HOME/registry" /opt/buildhome/cache/cargo/ 2>/dev/null || true
-cp -r target/release/. /opt/buildhome/cache/target/ 2>/dev/null || true
+# Save caches
+mkdir -p /opt/buildhome/cache/{cargo,target}
+cp -r "$CARGO_HOME/registry" /opt/buildhome/cache/cargo/   2>/dev/null || true
+cp -r target/release/.        /opt/buildhome/cache/target/ 2>/dev/null || true
