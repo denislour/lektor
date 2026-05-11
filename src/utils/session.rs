@@ -16,13 +16,4 @@ impl Session {
             let _ = s.set_item(key, value);
         }
     }
-
-    pub fn remove_item(key: &str) {
-        if let Some(s) = web_sys::window()
-            .and_then(|w| w.session_storage().ok())
-            .flatten()
-        {
-            let _ = s.remove_item(key);
-        }
-    }
 }
