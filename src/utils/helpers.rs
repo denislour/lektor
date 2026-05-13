@@ -6,6 +6,7 @@ pub fn tag_to_lang(tag: &str) -> &'static str {
         "python" | "typing" => "python",
         "go" | "golang" => "go",
         "database" | "postgres" | "sql" => "sql",
+        "json" => "json",
         "devops" | "k8s" | "docker" | "yaml" | "git" | "cron" => "yaml",
         "redis" | "kafka" | "prometheus" | "monitoring" => "bash",
         "api" | "architecture" | "testing" | "security" | "tools" | "editor" => "bash",

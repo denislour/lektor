@@ -1,7 +1,7 @@
 ---
 title: "Theme Robusta — Khi cà phê Việt Nam lên terminal"
 date: "2026-05-14"
-tags: ["pi", "theme", "coffee"]
+tags: ["json", "pi", "theme", "coffee"]
 readTime: 6
 excerpt: "Tôi đã dành cả đêm để mix màu cà phê vào pi coding agent. Kết quả là robusta — một theme màu nâu đậm, hổ phách, caramel và một chút matcha xanh cho nó tươi."
 thumbnailCode: |-
