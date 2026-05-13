@@ -21,11 +21,9 @@ Thế là tôi tự pha chế.
 
 ## Phin — cái tên sinh ra từ filtre
 
-Tôi đặt tên repo là **phin** — từ tiếng Pháp *filtre* (cái lọc). Ai search "từ mượn tiếng Pháp trong tiếng Việt" sẽ thấy:
+Tôi đặt tên repo là **phin** — từ tiếng Pháp *filtre* (cái lọc). Như câu nói vẫn thường thấy:
 
-> *"Cà phê phải được lọc từ cái phin (filtre à café) mới đúng điệu."*
-
-Tự nhiên như bánh mì, như nhà ga, như xi măng.
+> *"Những giọt cà phê thong thả rơi từ chiếc phin cũ."*
 
 ## Màu sắc — lấy cảm hứng từ ly cà phê
 
