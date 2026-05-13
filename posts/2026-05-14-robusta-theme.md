@@ -1,5 +1,5 @@
 ---
-title: "Theme Robusta — Khi cà phê Việt Nam lên terminal"
+title: "Theme Robusta — Một ly cà phê phin giữa terminal"
 date: "2026-05-14"
 tags: ["json", "pi", "theme", "coffee"]
 readTime: 6
