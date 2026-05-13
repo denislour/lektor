@@ -2,3 +2,4 @@
 dist/
 /posts-local
 .pi/
+.idea/
