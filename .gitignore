@@ -2,4 +2,5 @@
 dist/
 /posts-local
 .pi/
+AGENTS.md
 .idea/
