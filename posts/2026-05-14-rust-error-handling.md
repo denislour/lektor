@@ -9,6 +9,7 @@ thumbnailCode: |-
       // Nếu có lỗi thì return, không phải panic
       Ok(())
   }
+excerpt: "200 dòng unwrap() của chính mình. 1 server sập lúc 3 giờ sáng. Và cái kết: thiserror, ?, và một cốc cà phê phin nguội ngắt."
 ---
 
 3 giờ sáng. Điện thoại rung.
