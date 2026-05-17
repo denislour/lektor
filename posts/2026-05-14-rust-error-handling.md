@@ -3,6 +3,12 @@ title: "Tôi từng ghét error handling — Cho đến khi production sập lú
 date: "2026-05-14"
 tags: ["rust"]
 readTime: 8
+thumbnailCode: |-
+  fn main() -> Result<(), Box<dyn std::error::Error>> {
+      // Production không chết lúc 3h sáng
+      // Nếu có lỗi thì return, không phải panic
+      Ok(())
+  }
 ---
 
 3 giờ sáng. Điện thoại rung.
