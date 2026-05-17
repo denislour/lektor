@@ -4,6 +4,15 @@ date: "2026-05-14"
 tags: ["json", "pi", "theme", "coffee"]
 readTime: 8
 excerpt: "Tôi không biết phối màu. Tôi không biết độ bão hoà là cái quái gì. Hồi nhỏ tôi vẽ con gà 3 chân. Nhưng tôi biết uống cà phê. Và tôi đã dùng ly cà phê phin để làm ra cái theme terminal cho pi coding agent — vì terminal mặc định nó... vô hồn quá."
+thumbnailCode: |-
+  {
+    "name": "cafe-phin",
+    "type": "dark",
+    "colors": {
+      "primary": "#c96442",
+      "foreground": "#e6edf3"
+    }
+  }
 ---
 
 2 giờ sáng. Màn hình tối om. Chữ trắng muốt. Tôi ngồi nhìn chằm chằm vào cái JSON dài 200 dòng — thiếu dấu phẩy ở dòng 142.
