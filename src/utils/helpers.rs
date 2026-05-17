@@ -10,6 +10,7 @@ pub fn tag_to_lang(tag: &str) -> &'static str {
         "devops" | "k8s" | "docker" | "yaml" | "git" | "cron" => "yaml",
         "redis" | "kafka" | "prometheus" | "monitoring" => "bash",
         "api" | "architecture" | "testing" | "security" | "tools" | "editor" => "bash",
+        "nixos" | "nix" | "vmware" => "nix",
         _ => "plaintext",
     }
 }
