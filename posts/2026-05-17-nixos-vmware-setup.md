@@ -181,8 +181,6 @@ Nhưng 5 tiếng đó đáng đấy.
 
 ---
 
-**Repo config của tôi:** [github.com/denislour/dotfiles](https://github.com/denislour/dotfiles) — anh em cần thì clone về, sửa `device = "/dev/sda"` cho đúng ổ của mình, chạy disko rồi install.
-
 À mà nhớ swap nhé. Tôi quên mất 2 lần. Lần thứ 3 mới nhớ.
 
 🦀
