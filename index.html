@@ -23,6 +23,18 @@
         />
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Ensure nix code blocks have light text on dark background
+                var style = document.createElement('style');
+                style.textContent = `
+                    pre code.hljs { color: #c9d1d9 !important; }
+                    .hljs { color: #c9d1d9 !important; background: #0d1117 !important; }
+                `;
+                document.head.appendChild(style);
+            });
+        </script>
     </head>
     <body></body>
 </html>
