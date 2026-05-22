@@ -4,9 +4,10 @@ mod header;
 mod hero;
 mod pagination;
 mod post_card;
-pub use featured::*;
-pub use footer::*;
-pub use header::*;
-pub use hero::*;
-pub use pagination::*;
-pub use post_card::*;
+
+pub use featured::FeaturedPost;
+pub use footer::Footer;
+pub use header::Header;
+pub use hero::HeroSection;
+pub use pagination::Pagination;
+pub use post_card::PostCard;

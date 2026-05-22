@@ -1,6 +1,6 @@
-pub mod app_store;
-pub mod posts_store;
-pub mod search_store;
+mod app_store;
+mod posts_store;
+mod search_store;
 
 pub use app_store::AppStore;
 pub use posts_store::PostsStore;
